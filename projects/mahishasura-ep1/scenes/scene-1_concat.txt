@@ -1,0 +1,4 @@
+file '/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-1.mp4'
+file '/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-2.mp4'
+file '/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-3.mp4'
+file '/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-4.mp4'

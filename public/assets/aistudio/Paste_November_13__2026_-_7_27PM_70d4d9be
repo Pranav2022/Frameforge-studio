@@ -1,0 +1,1495 @@
+# PROJECT: UNIVERSAL AI VIDEO PRODUCTION ENGINE
+## Complete Software Architecture, Algorithms, Implementation and Deployment Specification
+
+You are acting as a Principal Software Architect, AI/ML Engineer, Full-Stack Developer, Video Processing Engineer, Automation Engineer, QA Engineer and Technical Documentation Writer.
+
+Your responsibility is to design, implement, test and document a complete, modular, locally runnable AI video production system.
+
+Do not stop at explaining the architecture. Build the actual working software, implement its modules, connect the pipeline, test it and provide instructions to run it.
+
+The user is a beginner. Every installation, configuration, workflow and operational instruction must be explained step by step.
+
+The system must be generic. It must not contain hardcoded assumptions about Mahishasura, mythology, animation, Hindi, or any particular story.
+
+Mahishasura will be the first demonstration project, not the software's only supported use case.
+
+---
+
+# PART 1: PROJECT OBJECTIVE
+
+Build a software application that takes multiple user inputs and automatically generates a complete video.
+
+The application should accept:
+
+1. A complete script.
+2. Story, topic or video description.
+3. Character reference images.
+4. Character descriptions and visual identity.
+5. Environment and background reference images.
+6. Scene-by-scene breakdown.
+7. Detailed character animation instructions.
+8. Camera movement instructions.
+9. Environment movement instructions.
+10. Voice artist reference audio.
+11. Voiceover language and delivery instructions.
+12. Background music.
+13. Sound effects.
+14. Subtitle language.
+15. Video aspect ratio.
+16. Target video duration.
+17. Visual style and quality preferences.
+18. Export settings.
+
+The system must process these inputs and generate:
+
+- Character reference assets.
+- Environment assets.
+- Scene-specific images.
+- Individual animated scene clips.
+- Narration audio.
+- Subtitles.
+- Background music.
+- Sound effects.
+- Final assembled video.
+- Individual scene video files.
+- Project files and production metadata.
+- Vertical and horizontal versions where requested.
+
+The system should support videos of 30 seconds, 60 seconds, 120 seconds, 5 minutes, 15 minutes or longer.
+
+It must support both:
+- AI-generated video clips.
+- Image-based animation and deterministic motion graphics.
+
+The system must intelligently combine these approaches based on model availability, hardware capability, scene requirements and generation cost.
+
+---
+
+# PART 2: HARDWARE AND BUDGET CONSTRAINTS
+
+The development machine has:
+
+- Operating system: Windows.
+- GPU: NVIDIA GeForce RTX 2050.
+- VRAM: 4 GB.
+- RAM: 16 GB.
+- Storage: SSD.
+- Budget: ₹0.
+- No paid APIs.
+- No mandatory subscriptions.
+- No paid cloud GPU dependency.
+- No reliance on Comfy Cloud credits.
+
+The application must be designed for this hardware.
+
+Important restrictions:
+
+1. Do not assume that large video-generation models can run locally.
+2. Do not load several large models into VRAM simultaneously.
+3. Avoid unnecessary GPU memory allocation.
+4. Prefer CPU processing for orchestration, metadata, subtitle generation and other lightweight tasks.
+5. Use GPU acceleration only when supported and beneficial.
+6. Provide low-memory execution modes.
+7. Process video in short segments.
+8. Allow resuming interrupted jobs.
+9. Cache generated assets.
+10. Avoid regenerating assets that already exist.
+
+The system must work even when no generative video model is available.
+
+In that case, it should generate animated videos from images using camera movements, parallax, layers, masks, particles, transitions, lighting effects and audio synchronization.
+
+Never pretend that deterministic image animation is equivalent to fully generated character animation.
+
+---
+
+# PART 3: RESEARCH FREE MODELS BEFORE IMPLEMENTATION
+
+Before selecting the architecture, research currently available free and open-source AI models.
+
+Do not rely on outdated model recommendations.
+
+Check official model repositories, documentation, licensing terms and hardware requirements.
+
+Investigate these categories:
+
+## A. Image generation
+
+Evaluate:
+- Stable Diffusion 1.5.
+- SDXL.
+- FLUX variants where suitable.
+- Other genuinely free image-generation models.
+
+Evaluate:
+- VRAM requirement.
+- RAM requirement.
+- Image quality.
+- Character consistency.
+- Reference-image support.
+- Local inference support.
+- License and commercial-use restrictions.
+
+## B. Image-to-video generation
+
+Investigate:
+- Stable Video Diffusion.
+- AnimateDiff.
+- Wan video model variants.
+- LTX-Video.
+- Other available open-source image-to-video models.
+
+Do not assume these models will run on 4 GB VRAM.
+
+Classify every model:
+
+1. Feasible on the user's laptop.
+2. Feasible with severe compromises.
+3. Requires cloud hardware.
+4. Not suitable for this project.
+
+## C. Text-to-video generation
+
+Evaluate available open-source models and determine whether they support:
+- Text-to-video.
+- Image-to-video.
+- Reference-image conditioning.
+- Motion conditioning.
+- Camera movement.
+- Consistent subjects.
+- Long video generation.
+
+## D. Text-to-speech
+
+Evaluate:
+- Piper.
+- Kokoro.
+- Coqui TTS and maintained alternatives.
+- Other suitable free models.
+
+Support Hindi narration where a suitable model and voice are available.
+
+## E. Voice cloning
+
+Investigate suitable open-source voice cloning systems, including XTTS-style models and alternatives.
+
+Requirements:
+- Voice sample upload.
+- Reference-audio validation.
+- Sample duration checks.
+- Audio cleanup.
+- Voice similarity evaluation.
+- Chunked speech generation.
+- Pronunciation correction.
+- Consent verification.
+
+Voice cloning must only be used when the user owns the voice or has explicit permission from the voice owner.
+
+Do not bypass voice-cloning restrictions.
+
+## F. Speech recognition and subtitles
+
+Evaluate:
+- Whisper.
+- Faster-Whisper.
+- Other suitable speech recognition tools.
+
+Support:
+- Hindi.
+- English.
+- Multiple languages where practical.
+
+## G. Music and sound effects
+
+Evaluate free, locally usable audio tools and properly licensed sound libraries.
+
+Check commercial-use restrictions.
+
+## H. Video rendering
+
+Evaluate:
+- FFmpeg.
+- MoviePy.
+- OpenCV.
+- Blender.
+- Other suitable open-source tools.
+
+For each recommended model or tool provide:
+- Official repository.
+- Model size.
+- Approximate RAM and VRAM needs.
+- Installation procedure.
+- License.
+- Commercial-use conditions.
+- Whether it works offline.
+- Whether it is realistic for this hardware.
+
+Never invent a free tier, unlimited quota or commercial license.
+
+---
+
+# PART 4: HIGH-LEVEL SYSTEM ARCHITECTURE
+
+Design the application using independent modules.
+
+The application should follow this pipeline:
+
+USER INPUT
+    |
+    v
+PROJECT CREATION
+    |
+    v
+INPUT VALIDATION
+    |
+    v
+SCRIPT PROCESSING
+    |
+    v
+SCENE PLANNING
+    |
+    v
+CHARACTER AND ENVIRONMENT MANAGEMENT
+    |
+    v
+ASSET GENERATION
+    |
+    v
+SHOT PLANNING
+    |
+    v
+ANIMATION GENERATION
+    |
+    v
+VOICEOVER GENERATION
+    |
+    v
+SUBTITLE GENERATION
+    |
+    v
+SOUND DESIGN
+    |
+    v
+VIDEO ASSEMBLY
+    |
+    v
+QUALITY CONTROL
+    |
+    v
+FINAL EXPORT
+    |
+    v
+PROJECT ARCHIVE
+
+Every stage must be independent, testable, retryable and resumable.
+
+The application must not be one giant Python script.
+
+Use a modular architecture with clear interfaces between modules.
+
+---
+
+# PART 5: INPUT MANAGEMENT MODULE
+
+Create a project creation interface.
+
+The user should be able to create a project using:
+
+### Method 1: Guided form
+
+Fields:
+
+- Project name.
+- Project description.
+- Video topic.
+- Script.
+- Video duration.
+- Narration language.
+- Subtitle language.
+- Visual style.
+- Video resolution.
+- Aspect ratio.
+- Frame rate.
+- Character reference images.
+- Environment reference images.
+- Voice sample.
+- Background music.
+- Sound effects.
+- Scene descriptions.
+- Animation instructions.
+
+### Method 2: Upload project package
+
+Allow the user to upload:
+- JSON project manifest.
+- ZIP package containing script and reference images.
+- Text script.
+- Audio files.
+- Images.
+- Video references.
+
+### Method 3: AI-assisted project creation
+
+Allow a user to provide a simple story description.
+
+The system may use a configured local language model or optional external model to generate:
+
+- Initial script.
+- Scene breakdown.
+- Shot breakdown.
+- Narration draft.
+- Character descriptions.
+- Visual prompts.
+- Animation instructions.
+
+Do not make a paid language-model API mandatory.
+
+When an AI text model is unavailable, allow manual input.
+
+---
+
+# PART 6: PROJECT MANIFEST AND DATA MODEL
+
+Create a versioned JSON project manifest.
+
+It should contain:
+
+- Project metadata.
+- Input files.
+- Characters.
+- Character reference images.
+- Environments.
+- Scenes.
+- Shots.
+- Prompts.
+- Motion instructions.
+- Narration.
+- Subtitles.
+- Audio assets.
+- Generation settings.
+- Model information.
+- Output settings.
+- Job status.
+- Errors.
+- Retry counts.
+- Asset paths.
+
+Each scene must contain multiple shots.
+
+Each shot must support:
+
+- Unique ID.
+- Scene ID.
+- Shot number.
+- Start time.
+- End time.
+- Duration.
+- Characters present.
+- Environment.
+- Reference images.
+- Positive prompt.
+- Negative prompt.
+- Motion prompt.
+- Camera instructions.
+- Animation model.
+- Generation method.
+- Narration segment.
+- Sound effects.
+- Subtitle segment.
+- Output file.
+- Generation status.
+
+Use Pydantic or an equivalent schema-validation system.
+
+Validate the manifest before starting production.
+
+Create sample project manifests and JSON schema documentation.
+
+---
+
+# PART 7: SCRIPT PROCESSING ENGINE
+
+Create a script-processing module.
+
+Its responsibilities:
+
+1. Read uploaded script.
+2. Validate script structure.
+3. Identify characters.
+4. Identify locations.
+5. Identify events.
+6. Identify dialogue.
+7. Identify narration.
+8. Identify scene transitions.
+9. Estimate speaking duration.
+10. Break the script into scenes.
+11. Break scenes into individual shots.
+12. Estimate each shot's duration.
+13. Maintain story continuity.
+14. Preserve the original meaning.
+15. Detect missing information.
+
+If an AI model is available, it can assist in scene planning.
+
+Otherwise, allow the user to edit the scene breakdown manually.
+
+Never silently invent important story events.
+
+Allow users to approve the script and storyboard before asset generation.
+
+---
+
+# PART 8: CHARACTER CONSISTENCY ENGINE
+
+Create a reusable character library.
+
+Each character must have:
+
+- Character ID.
+- Name.
+- Description.
+- Appearance.
+- Face details.
+- Body proportions.
+- Clothing.
+- Accessories.
+- Color palette.
+- Voice identity.
+- Reference images.
+- Negative prompts.
+- Style information.
+
+For every new shot:
+
+1. Identify the characters required.
+2. Load their reference assets.
+3. Attach reference images where supported.
+4. Apply the stored visual description.
+5. Preserve clothing and visual identity.
+6. Validate generated images.
+7. Allow manual corrections.
+
+Support:
+- Reference-image conditioning.
+- Image embeddings where appropriate.
+- ControlNet or equivalent systems where suitable.
+- Fixed seed management.
+- Reference-image reuse.
+- Character-specific LoRAs when available and feasible.
+
+Do not claim that a fixed seed alone guarantees character consistency.
+
+Provide manual reference selection when automatic matching fails.
+
+---
+
+# PART 9: ENVIRONMENT AND ASSET MANAGEMENT
+
+Create a reusable environment library.
+
+Support:
+
+- Background images.
+- Foreground layers.
+- Character layers.
+- Props.
+- Weather effects.
+- Lighting effects.
+- Particles.
+- Masks.
+- Transparent PNG files.
+- Audio assets.
+
+Every generated asset must be saved with:
+
+- Unique ID.
+- File path.
+- Prompt.
+- Model.
+- Seed where supported.
+- Generation date.
+- Reference assets.
+- License metadata.
+- Quality status.
+
+Avoid duplicate asset generation.
+
+Implement caching based on input hashes and generation parameters.
+
+---
+
+# PART 10: IMAGE GENERATION ENGINE
+
+Implement a provider-based image-generation architecture.
+
+Example interface:
+
+ImageProvider.generate(
+    prompt,
+    negative_prompt,
+    reference_images,
+    width,
+    height,
+    seed,
+    settings
+)
+
+Potential providers:
+- Local ComfyUI API.
+- Local Diffusers pipeline.
+- Other compatible local providers.
+
+The provider must report:
+- Success.
+- Failure.
+- Model used.
+- Generation duration.
+- Output file.
+- Error message.
+
+Do not tightly couple the rest of the application to ComfyUI.
+
+The image-generation engine should support replacing providers without rewriting the entire application.
+
+---
+
+# PART 11: ANIMATION ENGINE
+
+This is one of the most important modules.
+
+Create a unified animation engine with multiple providers.
+
+### Mode A: Generative image-to-video
+
+When a suitable model is available, generate short video clips from reference images and motion prompts.
+
+Input:
+- Reference image.
+- Motion description.
+- Camera movement.
+- Duration.
+- FPS.
+- Model settings.
+
+Output:
+- Video clip.
+- Generation metadata.
+- Error status.
+
+### Mode B: Generative text-to-video
+
+When supported, generate clips from text prompts.
+
+### Mode C: Deterministic image animation
+
+This mode must work without a generative video model.
+
+Implement:
+
+1. Slow zoom-in.
+2. Slow zoom-out.
+3. Horizontal pan.
+4. Vertical pan.
+5. Camera shake.
+6. Parallax movement.
+7. Foreground and background separation.
+8. Particle effects.
+9. Rain.
+10. Snow.
+11. Smoke.
+12. Fire.
+13. Lightning.
+14. Fog.
+15. Light rays.
+16. Glowing objects.
+17. Fade transitions.
+18. Dissolve transitions.
+19. Motion blur where practical.
+20. Animated masks and cutouts.
+
+Use FFmpeg, OpenCV, MoviePy or another suitable engine.
+
+### Mode D: Hybrid animation
+
+Combine:
+- AI-generated clips.
+- Animated still images.
+- Layered motion graphics.
+- Particle effects.
+- Camera movements.
+
+Automatically choose the method based on the shot's requirements and available resources.
+
+Do not force every shot through a generative video model.
+
+### Animation instruction parser
+
+Convert user-provided natural-language instructions into a structured motion specification.
+
+For example:
+
+"Camera slowly moves toward Mahishasura while lightning flashes in the background."
+
+Convert this into structured parameters:
+
+- Camera: push-in.
+- Camera speed: slow.
+- Subject motion: minimal.
+- Environment: moving storm clouds.
+- Effect: lightning flash.
+- Duration: 8 seconds.
+- Preserve character identity: true.
+
+If automatic interpretation fails, allow manual configuration.
+
+---
+
+# PART 12: VOICE AND NARRATION ENGINE
+
+Create a voice-production module.
+
+Input:
+- Narration script.
+- Language.
+- Voice sample.
+- Voice identity.
+- Delivery style.
+- Speaking speed.
+- Emotional tone.
+- Pronunciation dictionary.
+
+Required functionality:
+
+1. Validate audio file.
+2. Check sample duration.
+3. Normalize audio.
+4. Remove excessive silence.
+5. Generate speech in manageable chunks.
+6. Maintain voice consistency.
+7. Correct pronunciation.
+8. Join chunks.
+9. Add pauses.
+10. Synchronize narration with scenes.
+11. Export WAV and MP3.
+
+Support a fallback voice when voice cloning is unavailable.
+
+The user must be able to record their own narration.
+
+Do not require an online paid TTS service.
+
+Use consent-based voice cloning only.
+
+---
+
+# PART 13: SUBTITLE ENGINE
+
+Generate subtitles from narration.
+
+Support:
+- Script-based subtitles.
+- Audio-transcription-based subtitles.
+- Translation into a second language.
+- Manual subtitle correction.
+
+Output formats:
+- SRT.
+- VTT.
+- ASS.
+
+Each subtitle must contain:
+- Start time.
+- End time.
+- Text.
+- Language.
+
+Provide controls for:
+- Font.
+- Size.
+- Color.
+- Position.
+- Background.
+- Outline.
+- Maximum characters per line.
+
+Ensure subtitles are synchronized with narration.
+
+---
+
+# PART 14: AUDIO AND SOUND DESIGN ENGINE
+
+Create separate audio tracks for:
+
+1. Narration.
+2. Background music.
+3. Ambient sounds.
+4. Scene-specific sound effects.
+5. Transition effects.
+
+Implement:
+
+- Audio normalization.
+- Volume automation.
+- Fade-in.
+- Fade-out.
+- Ducking music beneath narration.
+- Silence detection.
+- Audio synchronization.
+- Final audio mixing.
+
+Support user-supplied audio and properly licensed free audio.
+
+Never download copyrighted music without permission.
+
+---
+
+# PART 15: VIDEO ASSEMBLY ENGINE
+
+Create a video-rendering module.
+
+Input:
+- Individual scene clips.
+- Animated images.
+- Narration.
+- Music.
+- Sound effects.
+- Subtitles.
+- Transitions.
+
+Output:
+- Individual shot videos.
+- Individual scene videos.
+- Complete episode.
+- Final subtitles.
+- Project archive.
+
+Use FFmpeg as a core rendering engine where practical.
+
+Support:
+
+- MP4.
+- H.264.
+- AAC.
+- 24 FPS.
+- 30 FPS.
+- 720p.
+- 1080p.
+- 16:9.
+- 9:16.
+- 1:1.
+
+The renderer must:
+1. Calculate shot durations.
+2. Normalize resolution.
+3. Normalize frame rates.
+4. Synchronize audio.
+5. Add transitions.
+6. Add subtitles.
+7. Mix audio.
+8. Render each scene.
+9. Concatenate scenes.
+10. Validate the final duration.
+11. Validate audio and video streams.
+12. Export final files.
+
+Avoid unnecessary re-encoding.
+
+Provide progress information during rendering.
+
+---
+
+# PART 16: AUTOMATIC QUALITY CONTROL
+
+Implement a QC module.
+
+Check:
+
+### Visual quality
+- Missing files.
+- Corrupt images.
+- Corrupt videos.
+- Wrong dimensions.
+- Wrong aspect ratios.
+- Black frames.
+- Unexpected blank clips.
+- Character reference mismatches where measurable.
+- Duplicate or unintended assets.
+
+### Audio quality
+- Missing narration.
+- Silence.
+- Clipping.
+- Audio/video duration mismatch.
+- Missing sound effects.
+
+### Subtitle quality
+- Missing subtitle files.
+- Invalid timestamps.
+- Overlapping subtitles.
+- Excessively long lines.
+- Subtitle timing errors.
+
+### Project quality
+- Missing scene.
+- Missing shot.
+- Broken asset paths.
+- Failed generation jobs.
+- Incomplete rendering.
+
+Generate a QC report.
+
+Allow the user to approve, reject or regenerate a shot.
+
+Never silently substitute a failed asset with an unrelated image.
+
+---
+
+# PART 17: JOB QUEUE AND AUTOMATION
+
+Implement a background job system.
+
+Every generation task must have:
+
+- Job ID.
+- Project ID.
+- Scene ID.
+- Shot ID.
+- Job type.
+- Priority.
+- Status.
+- Start time.
+- Completion time.
+- Retry count.
+- Error message.
+- Output file.
+
+Possible statuses:
+
+- Pending.
+- Validating.
+- Running.
+- Completed.
+- Failed.
+- Cancelled.
+- Waiting for user approval.
+
+Requirements:
+
+1. Queue tasks sequentially by default.
+2. Avoid loading multiple large models at once.
+3. Retry transient failures.
+4. Preserve successful outputs.
+5. Resume interrupted projects.
+6. Allow task cancellation.
+7. Display estimated progress without inventing exact completion times.
+8. Store logs.
+9. Support manual retry.
+10. Never lose project metadata after a crash.
+
+---
+
+# PART 18: USER INTERFACE
+
+Build a beginner-friendly web application.
+
+The UI must include:
+
+### Dashboard
+- Create project.
+- Open project.
+- Recent projects.
+- Project progress.
+- Model availability.
+- Hardware status.
+- Storage usage.
+
+### Project creation wizard
+- Basic information.
+- Script upload.
+- Character references.
+- Voice sample.
+- Scene instructions.
+- Output preferences.
+
+### Character manager
+- Add character.
+- Edit character.
+- Upload references.
+- Preview images.
+- Manage character consistency.
+
+### Scene editor
+- Scene list.
+- Shot list.
+- Script.
+- Image preview.
+- Animation prompt.
+- Motion settings.
+- Audio assignment.
+- Subtitle preview.
+
+### Generation dashboard
+- Pending jobs.
+- Running jobs.
+- Completed jobs.
+- Failed jobs.
+- Retry buttons.
+- Progress logs.
+
+### Video preview
+- Preview each shot.
+- Preview each scene.
+- Preview the full episode.
+- Approve or reject.
+- Regenerate individual shots.
+
+### Export dashboard
+- Horizontal video.
+- Vertical video.
+- Individual clips.
+- Subtitle files.
+- Audio files.
+- Project archive.
+
+Make the UI understandable to someone with no programming knowledge.
+
+---
+
+# PART 19: RECOMMENDED SOFTWARE ARCHITECTURE
+
+Evaluate the following stack and adjust it only when there is a strong technical reason.
+
+Backend:
+- Python.
+- FastAPI.
+- Pydantic.
+- SQLite.
+- SQLAlchemy where useful.
+
+Frontend:
+- Vue 3.
+- Vite.
+- TypeScript.
+- Vuetify or another lightweight UI library.
+
+Video processing:
+- FFmpeg.
+- OpenCV.
+- MoviePy only where it adds value.
+
+AI integration:
+- Provider interfaces.
+- Local inference adapters.
+- Optional ComfyUI API integration.
+- Model registry.
+- Model capability detection.
+
+Background jobs:
+- SQLite-backed job queue initially.
+- Avoid mandatory Redis or other infrastructure unless justified.
+
+Storage:
+- Local filesystem.
+- SQLite metadata.
+- Per-project asset directories.
+
+The application must be runnable on Windows.
+
+Avoid Docker as a mandatory requirement for the beginner installation.
+
+---
+
+# PART 20: PROJECT DIRECTORY STRUCTURE
+
+Create a maintainable directory structure similar to:
+
+ai-video-engine/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── stores/
+│   │   ├── services/
+│   │   └── types/
+│   └── package.json
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── database/
+│   │   ├── services/
+│   │   ├── providers/
+│   │   ├── engines/
+│   │   ├── workers/
+│   │   └── utils/
+│   └── requirements.txt
+│
+├── models/
+│   ├── image/
+│   ├── video/
+│   ├── speech/
+│   └── audio/
+│
+├── projects/
+│
+├── cache/
+│
+├── logs/
+│
+├── tests/
+│
+├── scripts/
+│
+├── docs/
+│
+├── config/
+│
+├── .env.example
+├── README.md
+└── start.bat
+
+You may improve this structure when implementation requires it.
+
+Do not put generated media inside source-code directories.
+
+---
+
+# PART 21: API DESIGN
+
+Create clear API endpoints.
+
+Examples:
+
+POST /api/projects
+GET /api/projects
+GET /api/projects/{project_id}
+PUT /api/projects/{project_id}
+
+POST /api/projects/{project_id}/assets
+POST /api/projects/{project_id}/characters
+POST /api/projects/{project_id}/scenes
+
+POST /api/projects/{project_id}/validate
+
+POST /api/projects/{project_id}/generate-assets
+POST /api/projects/{project_id}/generate-narration
+POST /api/projects/{project_id}/generate-subtitles
+POST /api/projects/{project_id}/generate-video
+
+GET /api/jobs
+GET /api/jobs/{job_id}
+POST /api/jobs/{job_id}/retry
+POST /api/jobs/{job_id}/cancel
+
+GET /api/projects/{project_id}/preview
+GET /api/projects/{project_id}/export
+
+Provide request and response schemas for every endpoint.
+
+Use appropriate validation and error handling.
+
+---
+
+# PART 22: COMPLETE ALGORITHM FROM START TO END
+
+Implement the following execution algorithm.
+
+STEP 1:
+User creates a project.
+
+STEP 2:
+User uploads or enters the script.
+
+STEP 3:
+User uploads character references.
+
+STEP 4:
+User uploads voice sample if voice cloning is required.
+
+STEP 5:
+User provides visual style and animation instructions.
+
+STEP 6:
+Validate all input files and project settings.
+
+STEP 7:
+Create a versioned project manifest.
+
+STEP 8:
+Parse the script.
+
+STEP 9:
+Extract characters, environments, dialogue and narration.
+
+STEP 10:
+Generate scene breakdown.
+
+STEP 11:
+Generate shot breakdown.
+
+STEP 12:
+Calculate total target duration.
+
+STEP 13:
+Validate that scene and shot durations match the target.
+
+STEP 14:
+Generate or select character reference assets.
+
+STEP 15:
+Generate or select environment assets.
+
+STEP 16:
+Generate storyboard images.
+
+STEP 17:
+Show storyboard to the user for approval.
+
+STEP 18:
+Create generation jobs for every shot.
+
+STEP 19:
+Select the appropriate animation provider for each shot.
+
+STEP 20:
+Generate video clips where feasible.
+
+STEP 21:
+Use deterministic image animation for unsupported or expensive shots.
+
+STEP 22:
+Validate every generated asset.
+
+STEP 23:
+Retry failed shots without losing successful results.
+
+STEP 24:
+Generate narration from the script.
+
+STEP 25:
+Split narration into scene-level audio segments.
+
+STEP 26:
+Synchronize narration with scene timing.
+
+STEP 27:
+Generate and validate subtitles.
+
+STEP 28:
+Assign background music and sound effects.
+
+STEP 29:
+Render each individual shot.
+
+STEP 30:
+Combine shots into scene videos.
+
+STEP 31:
+Combine scene videos into the complete episode.
+
+STEP 32:
+Mix narration, background music and sound effects.
+
+STEP 33:
+Render subtitles.
+
+STEP 34:
+Run visual and audio quality checks.
+
+STEP 35:
+Allow user approval or targeted regeneration.
+
+STEP 36:
+Export final landscape video.
+
+STEP 37:
+Optionally reframe and export vertical video.
+
+STEP 38:
+Save individual scene clips and project metadata.
+
+STEP 39:
+Generate a project archive and final QC report.
+
+The pipeline must be resumable from any successfully completed stage.
+
+---
+
+# PART 23: TESTING REQUIREMENTS
+
+Create unit tests for:
+
+- Manifest validation.
+- Script processing.
+- Duration calculation.
+- Scene planning.
+- Shot planning.
+- Character references.
+- Asset storage.
+- Cache management.
+- Job scheduling.
+- Provider interfaces.
+- Audio processing.
+- Subtitle timing.
+- Video rendering.
+- Export validation.
+
+Create integration tests for the full pipeline.
+
+Create a low-resource test mode that does not require any large AI model.
+
+The application must pass an end-to-end test using:
+- A sample script.
+- Sample reference images.
+- A sample voiceover.
+- Sample background audio.
+- Deterministic animation.
+
+It must create a valid MP4 output without any paid service.
+
+---
+
+# PART 24: IMPLEMENTATION PHASES
+
+Do not attempt to build everything simultaneously.
+
+Implement in small modules and maintain a working application at every phase.
+
+### PHASE 0: Feasibility and research
+
+- Research models.
+- Check licenses.
+- Check hardware.
+- Define realistic limitations.
+- Produce architecture decisions.
+
+### PHASE 1: Project foundation
+
+- Create repository.
+- Set up backend.
+- Set up frontend.
+- Configure SQLite.
+- Create project management.
+- Implement file uploads.
+
+### PHASE 2: Manifest and scene planning
+
+- Define schemas.
+- Implement validation.
+- Implement script ingestion.
+- Implement scene breakdown.
+- Implement shot breakdown.
+
+### PHASE 3: Asset management
+
+- Character library.
+- Environment library.
+- Reference-image storage.
+- Asset metadata.
+- Caching.
+
+### PHASE 4: Image generation
+
+- Provider interface.
+- Local model adapter.
+- Optional ComfyUI adapter.
+- Image generation jobs.
+- Image preview.
+
+### PHASE 5: Deterministic animation
+
+- Zoom.
+- Pan.
+- Parallax.
+- Particles.
+- Weather.
+- Lighting.
+- Transitions.
+
+### PHASE 6: Generative video integration
+
+- Provider interface.
+- Model capability detection.
+- Model adapter.
+- Short clip generation.
+- Error handling.
+- Fallback to deterministic animation.
+
+### PHASE 7: Voice and audio
+
+- Voice sample upload.
+- TTS.
+- Optional consent-based voice cloning.
+- Narration segmentation.
+- Audio mixing.
+
+### PHASE 8: Subtitles
+
+- Script-to-subtitle conversion.
+- Speech transcription.
+- Translation.
+- Timing correction.
+- SRT export.
+
+### PHASE 9: Video assembly
+
+- Shot rendering.
+- Scene rendering.
+- Episode rendering.
+- Audio synchronization.
+- Subtitles.
+- Video export.
+
+### PHASE 10: Quality control
+
+- Visual checks.
+- Audio checks.
+- Subtitle checks.
+- Export validation.
+- Retry and recovery.
+
+### PHASE 11: User interface completion
+
+- Dashboard.
+- Project wizard.
+- Character manager.
+- Scene editor.
+- Generation dashboard.
+- Preview.
+- Export.
+
+### PHASE 12: Final testing and documentation
+
+- End-to-end test.
+- Hardware test.
+- Performance optimization.
+- Installation guide.
+- User manual.
+- Troubleshooting guide.
+- Demo project.
+
+Do not declare a phase complete unless its tests pass.
+
+---
+
+# PART 25: DEVELOPMENT RULES
+
+Follow these rules throughout implementation.
+
+1. Do not provide only pseudocode.
+2. Write actual working source code.
+3. Do not omit files with comments such as "implement later".
+4. Do not invent model capabilities.
+5. Do not hardcode project-specific story content.
+6. Do not require paid APIs.
+7. Do not make a cloud account mandatory.
+8. Do not assume unlimited free GPU access.
+9. Do not load large models without checking available memory.
+10. Do not regenerate successful assets unnecessarily.
+11. Do not discard existing user data during retries.
+12. Do not store voice samples insecurely.
+13. Do not use unlicensed assets.
+14. Do not use copyrighted music without permission.
+15. Keep providers replaceable.
+16. Keep the software modular.
+17. Use logging and understandable error messages.
+18. Include Windows installation scripts.
+19. Include sample configuration files.
+20. Include documentation for every module.
+21. Use sensible defaults rather than repeatedly asking the user questions.
+22. Ask for user approval at important creative checkpoints, not every tiny technical operation.
+23. Never claim a generated video exists unless it has actually been rendered and validated.
+
+When a model is unavailable, degrade gracefully to an alternative.
+
+---
+
+# PART 26: FINAL DELIVERABLES
+
+The completed project must include:
+
+1. Complete source code.
+2. Backend application.
+3. Frontend application.
+4. Database schema.
+5. Project manifest schema.
+6. Model provider architecture.
+7. Image-generation integration.
+8. Animation engine.
+9. Video assembly engine.
+10. Voice and audio engine.
+11. Subtitle engine.
+12. Job queue.
+13. Quality-control module.
+14. Automated tests.
+15. Windows installation script.
+16. Windows startup script.
+17. Environment configuration template.
+18. README.
+19. Beginner installation guide.
+20. Troubleshooting guide.
+21. Architecture documentation.
+22. API documentation.
+23. Sample project.
+24. Sample generated video.
+25. Sample individual scene clips.
+26. Exported subtitles.
+27. Final QC report.
+
+The sample project must use the Mahishasura Episode 1 concept, but all core modules must remain generic.
+
+---
+
+# PART 27: DEFINITION OF DONE
+
+The project is not complete merely because the UI loads.
+
+It is complete only when a beginner can:
+
+1. Install the application on Windows.
+2. Start it with a simple command or batch file.
+3. Create a new project.
+4. Upload a script.
+5. Upload character reference images.
+6. Upload a voice sample or select a fallback voice.
+7. Add scene and animation instructions.
+8. Generate or import images.
+9. Generate animated clips or deterministic image animations.
+10. Generate narration.
+11. Generate subtitles.
+12. Add sound.
+13. Preview scenes.
+14. Assemble the full video.
+15. Export a valid MP4.
+16. Reopen the project and continue working.
+17. Export individual scene videos.
+
+The first acceptance test must generate a working 120-second video using deterministic animation and free local tools, without requiring a paid service or cloud GPU.
+
+A separate test should demonstrate a generative video provider if a compatible free model is actually available.
+
+Be honest about the difference in visual quality between these two methods.
+
+---
+
+# FINAL INSTRUCTION TO THE AI CODING AGENT
+
+Start with Phase 0.
+
+Research the current free models, verify their licenses and hardware requirements, then produce an architecture decision document.
+
+After that, implement Phase 1 and continue phase by phase.
+
+Do not merely tell me what I should build. Build it.
+
+I am a beginner, so provide exact commands, exact file names, exact folder locations, installation steps and instructions for running the software.
+
+Do not ask unnecessary questions. Use sensible defaults.
+
+If a technical limitation prevents an exact requirement, explain the limitation and implement the best working free alternative.
+
+Prioritize a working, reliable, zero-cost end-to-end system over impressive but unusable AI demonstrations.

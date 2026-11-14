@@ -1,0 +1,69 @@
+{
+  "projectId": "mahishasura-ep1",
+  "generatedAt": "2026-11-13T14:09:48.611Z",
+  "overallStatus": "pass",
+  "summary": {
+    "passed": 8,
+    "warnings": 0,
+    "failed": 0
+  },
+  "checks": [
+    {
+      "category": "project",
+      "name": "Scene presence",
+      "status": "pass",
+      "details": "4 scenes configured."
+    },
+    {
+      "category": "visual",
+      "name": "Rendered shot clips",
+      "status": "pass",
+      "details": "All shot MP4 files exist and are non-empty."
+    },
+    {
+      "category": "subtitle",
+      "name": "Subtitle timing & overlap check",
+      "status": "pass",
+      "details": "24 cues validated with zero overlaps."
+    },
+    {
+      "category": "subtitle",
+      "name": "Subtitle line length",
+      "status": "pass",
+      "details": "All lines fit within readable character limit."
+    },
+    {
+      "category": "audio",
+      "name": "Audio loudness & clipping",
+      "status": "pass",
+      "details": "Mean -15.7 dB, peak -5.9 dB (clean headroom)."
+    },
+    {
+      "category": "visual",
+      "name": "Output dimensions & aspect ratio",
+      "status": "pass",
+      "details": "Actual 1280x720 @ 24fps (expected 1280x720)."
+    },
+    {
+      "category": "audio",
+      "name": "Audio/video target duration sync",
+      "status": "pass",
+      "details": "Rendered 119.96s vs target 120s (delta 0.04s)."
+    },
+    {
+      "category": "visual",
+      "name": "Extended black-frame detection",
+      "status": "pass",
+      "details": "No unintended black segments (>=1.2s) detected."
+    }
+  ],
+  "mediaProbe": {
+    "durationSeconds": 119.96,
+    "width": 1280,
+    "height": 720,
+    "fps": 24,
+    "hasVideo": true,
+    "hasAudio": true,
+    "fileSizeBytes": 31400776
+  }
+}

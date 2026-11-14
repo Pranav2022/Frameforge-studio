@@ -1,0 +1,4 @@
+file '/app/applet/projects/mahishasura-ep1/audio/scene-1_narration.wav'
+file '/app/applet/projects/mahishasura-ep1/audio/scene-2_narration.wav'
+file '/app/applet/projects/mahishasura-ep1/audio/scene-3_narration.wav'
+file '/app/applet/projects/mahishasura-ep1/audio/scene-4_narration.wav'

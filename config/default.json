@@ -1,0 +1,25 @@
+{
+  "engineVersion": "1.0.0",
+  "hardwareProfile": {
+    "targetGpu": "NVIDIA GeForce RTX 2050",
+    "vramBudgetMb": 4096,
+    "systemRamGb": 16,
+    "lowVramMode": true,
+    "maxConcurrentHeavyJobs": 1
+  },
+  "defaults": {
+    "resolution": "720p",
+    "aspectRatio": "16:9",
+    "fps": 24,
+    "imageProvider": "procedural",
+    "animationProvider": "deterministic",
+    "subtitleLanguage": "en",
+    "maxCharsPerLine": 44,
+    "audioLoudnessLufs": -14
+  },
+  "optionalLocalProviders": {
+    "comfyUiUrl": "http://127.0.0.1:8188",
+    "ollamaUrl": "http://127.0.0.1:11434",
+    "ollamaModel": "qwen2.5:3b"
+  }
+}

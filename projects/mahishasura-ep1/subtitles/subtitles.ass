@@ -1,0 +1,35 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,24,&H00FFFFFF,&H000000FF,&H00000000,&H73000000,0,0,0,0,100,100,0,0,1,2,1,2,24,24,28,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:04.44,Default,,0,0,0,,On the jagged peaks of ancient Mandara,\NRambha's son Mahishasura stood in relentless
+Dialogue: 0,0:00:04.48,0:00:08.92,Default,,0,0,0,,penance.
+Dialogue: 0,0:00:08.96,0:00:13.40,Default,,0,0,0,,On the jagged peaks of ancient Mandara,\NRambha's son Mahishasura stood in relentless
+Dialogue: 0,0:00:13.44,0:00:17.88,Default,,0,0,0,,penance.
+Dialogue: 0,0:00:17.92,0:00:22.36,Default,,0,0,0,,Season after season, rain and scorching sun\Ntested his resolve until the sky itself
+Dialogue: 0,0:00:22.40,0:00:26.84,Default,,0,0,0,,trembled.
+Dialogue: 0,0:00:26.88,0:00:35.79,Default,,0,0,0,,Grant me a boon that no mortal or celestial\Nwarrior may end my life.
+Dialogue: 0,0:00:35.83,0:00:40.10,Default,,0,0,0,,Armed with the boon that no man could defeat\Nhim, Mahishasura forged an unstoppable
+Dialogue: 0,0:00:40.14,0:00:44.40,Default,,0,0,0,,legion.
+Dialogue: 0,0:00:44.44,0:00:48.71,Default,,0,0,0,,Armed with the boon that no man could defeat\Nhim, Mahishasura forged an unstoppable
+Dialogue: 0,0:00:48.75,0:00:53.01,Default,,0,0,0,,legion.
+Dialogue: 0,0:00:53.05,0:00:57.32,Default,,0,0,0,,Ancient banners rose above obsidian\Nbattlements as the balance of the three
+Dialogue: 0,0:00:57.36,0:01:01.62,Default,,0,0,0,,to fracture.
+Dialogue: 0,0:01:01.66,0:01:05.89,Default,,0,0,0,,Driven from their sanctuaries, the guardians\Nof the cosmos convened amid thunderclouds
+Dialogue: 0,0:01:05.93,0:01:10.16,Default,,0,0,0,,and fading starlight.
+Dialogue: 0,0:01:10.20,0:01:14.43,Default,,0,0,0,,Driven from their sanctuaries, the guardians\Nof the cosmos convened amid thunderclouds
+Dialogue: 0,0:01:14.47,0:01:18.70,Default,,0,0,0,,and fading starlight.
+Dialogue: 0,0:01:18.74,0:01:27.24,Default,,0,0,0,,Their combined radiance converged into a\Nsingle, unwavering resolve.
+Dialogue: 0,0:01:27.28,0:01:31.52,Default,,0,0,0,,From sacred flame and celestial grace\Nemerged Devi, bearing the trident, discus,
+Dialogue: 0,0:01:31.56,0:01:35.79,Default,,0,0,0,,lotus of cosmic order.
+Dialogue: 0,0:01:35.83,0:01:43.85,Default,,0,0,0,,Beneath a crimson twilight sky, pride met\Ncosmic dharma upon the open plains.
+Dialogue: 0,0:01:43.89,0:01:51.91,Default,,0,0,0,,Beneath a crimson twilight sky, pride met\Ncosmic dharma upon the open plains.
+Dialogue: 0,0:01:51.95,0:01:55.94,Default,,0,0,0,,This first chapter sets the stage for the\Ntimeless clash between unbridled power and
+Dialogue: 0,0:01:55.98,0:01:59.96,Default,,0,0,0,,fearless truth.

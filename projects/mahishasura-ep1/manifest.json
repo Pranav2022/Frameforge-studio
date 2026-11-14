@@ -1,0 +1,1046 @@
+{
+  "manifestVersion": "1.0.0",
+  "projectId": "mahishasura-ep1",
+  "name": "Mahishasura — Episode 1 (Demo)",
+  "description": "120-second deterministic demonstration project showcasing multi-scene script parsing, character consistency, FFmpeg camera/weather animation, narration, subtitles, and QC.",
+  "topic": "Mahishasura Episode 1: Rise of the Asura King & Birth of Cosmic Resolve",
+  "script": "SCENE 1: The Boons of Penance - Mountain Hermitage\n[MOTION: Slow zoom-in with warm golden light rays]\nNARRATOR: On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance. Season after season, rain and scorching sun tested his resolve until the sky itself trembled.\nMAHISHASURA: Grant me a boon that no mortal or celestial warrior may end my life.\n\nSCENE 2: Ascent to Power - Obsidian Fortress\n[MOTION: Slow pan right across towering fortress pillars with fire embers]\nNARRATOR: Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion. Ancient banners rose above obsidian battlements as the balance of the three realms began to fracture.\n\nSCENE 3: Gathering Storm - Celestial Citadel\n[MOTION: Slow push-in with storm clouds and lightning flash]\nNARRATOR: Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight. Their combined radiance converged into a single, unwavering resolve.\nNARRATOR: From sacred flame and celestial grace emerged Devi, bearing the trident, discus, and lotus of cosmic order.\n\nSCENE 4: The Dawn Confrontation - Crimson Battlefield\n[MOTION: Layered parallax drift with dramatic fire glow and slow zoom-out]\nNARRATOR: Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains. This first chapter sets the stage for the timeless clash between unbridled power and fearless truth.",
+  "targetDurationSeconds": 120,
+  "createdAt": "2026-11-13T14:06:11.060Z",
+  "updatedAt": "2026-11-13T14:11:51.367Z",
+  "stage": "assembled",
+  "characters": [
+    {
+      "id": "char-mahishasura",
+      "name": "Mahishasura",
+      "description": "Formidable shapeshifting asura monarch driven by fierce ambition.",
+      "appearance": "Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze",
+      "faceDetails": "Strong angular jaw, furrowed brow, bronze skin tone",
+      "bodyProportions": "Tall towering heroic build",
+      "clothing": "Dark bronze breastplate, crimson battle waist-sash, iron pauldrons",
+      "accessories": "Curved steel mace, royal horned crown",
+      "colorPalette": [
+        "#450a0a",
+        "#ea580c",
+        "#1c1917"
+      ],
+      "voiceIdentity": "deep-commanding",
+      "referenceImages": [
+        "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png"
+      ],
+      "negativePrompt": "modern clothing, cartoon, blurry, watermark, extra limbs",
+      "styleInfo": "epic painterly mythological illustration",
+      "fixedSeed": 2048
+    },
+    {
+      "id": "char-devi",
+      "name": "Devi",
+      "description": "Radiant embodiment of cosmic order born from unified celestial light.",
+      "appearance": "Serene fearless expression, luminous golden aura, flowing dark hair",
+      "faceDetails": "Calm determined eyes, golden bindu on forehead",
+      "bodyProportions": "Graceful poised warrior stance",
+      "clothing": "Crimson and gold silk battle saree, ornate celestial armor",
+      "accessories": "Golden trident, blazing discus, lotus emblem",
+      "colorPalette": [
+        "#7c2d12",
+        "#f59e0b",
+        "#fef3c7"
+      ],
+      "voiceIdentity": "calm-resonant",
+      "referenceImages": [
+        "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png"
+      ],
+      "negativePrompt": "modern clothing, blurry, watermark, low contrast",
+      "styleInfo": "epic painterly mythological illustration",
+      "fixedSeed": 4096
+    }
+  ],
+  "environments": [
+    {
+      "id": "env-mandara-mountain-peaks",
+      "name": "Mountain Hermitage",
+      "description": "High rocky Himalayan ridges veiled in dawn mist and golden sunbeams",
+      "backgroundImage": "/app/applet/projects/mahishasura-ep1/environments/mandara_peaks.png",
+      "lighting": "Golden dawn shafts piercing mountain mist",
+      "weatherDefault": "fog",
+      "colorPalette": [
+        "#0f172a",
+        "#b45309",
+        "#f59e0b"
+      ]
+    },
+    {
+      "id": "env-obsidian-fortress",
+      "name": "Obsidian Fortress",
+      "description": "Monolithic basalt pillars lit by blazing braziers and crimson banners",
+      "backgroundImage": "/app/applet/projects/mahishasura-ep1/environments/obsidian_fortress.png",
+      "lighting": "Warm torchlight against deep obsidian stone",
+      "weatherDefault": "none",
+      "colorPalette": [
+        "#18181b",
+        "#7f1d1d",
+        "#dc2626"
+      ]
+    },
+    {
+      "id": "env-celestial-citadel",
+      "name": "Celestial Citadel",
+      "description": "Elevated cloud-ringed sanctuary crackling with gathering storm lightning",
+      "backgroundImage": "/app/applet/projects/mahishasura-ep1/environments/celestial_citadel.png",
+      "lighting": "Cool indigo cloud light with electric cyan flashes",
+      "weatherDefault": "storm",
+      "colorPalette": [
+        "#172554",
+        "#1e3a8a",
+        "#38bdf8"
+      ]
+    },
+    {
+      "id": "env-crimson-battlefield",
+      "name": "Crimson Battlefield",
+      "description": "Expansive dusty plain under a dramatic crimson twilight horizon",
+      "backgroundImage": "/app/applet/projects/mahishasura-ep1/environments/crimson_battlefield.png",
+      "lighting": "Deep crimson sunset backlight with drifting embers",
+      "weatherDefault": "none",
+      "colorPalette": [
+        "#2e1010",
+        "#7c2d12",
+        "#f97316"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene-1",
+      "sceneNumber": 1,
+      "title": "The Boons of Penance",
+      "summary": "On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance. Season after season, rain and scorching sun tested his resolve until the sky itself tr",
+      "environmentId": "env-mandara-mountain-peaks",
+      "narrationText": "On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance. Season after season, rain and scorching sun tested his resolve until the sky itself trembled. Grant me a boon that no mortal or celestial warrior may end my life.",
+      "dialogueLines": [
+        {
+          "speaker": "MAHISHASURA",
+          "text": "Grant me a boon that no mortal or celestial warrior may end my life."
+        }
+      ],
+      "startTime": 0,
+      "endTime": 35.83,
+      "duration": 35.83,
+      "sfxPaths": [],
+      "outputFile": "/app/applet/projects/mahishasura-ep1/scenes/scene-1.mp4",
+      "status": "completed",
+      "shots": [
+        {
+          "id": "scene-1-shot-1",
+          "sceneId": "scene-1",
+          "shotNumber": 1,
+          "startTime": 0,
+          "endTime": 8.96,
+          "duration": 8.96,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-mandara-mountain-peaks",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/mandara_peaks.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-1-shot-1.png",
+          "positivePrompt": "epic painterly mythological illustration, The Boons of Penance, location: Mountain Hermitage. On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Mountain Hermitage, High rocky Himalayan ridges veiled in dawn mist and golden sunbeams, lighting: Golden dawn shafts piercing mountain mist",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Slow zoom-in with warm golden light rays",
+          "motionSpec": {
+            "rawInstruction": "Slow zoom-in with warm golden light rays",
+            "camera": "zoom_in",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-1_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-1.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-1-shot-2",
+          "sceneId": "scene-1",
+          "shotNumber": 2,
+          "startTime": 8.96,
+          "endTime": 17.92,
+          "duration": 8.96,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-mandara-mountain-peaks",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/mandara_peaks.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-1-shot-2.png",
+          "positivePrompt": "epic painterly mythological illustration, The Boons of Penance, location: Mountain Hermitage. On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Mountain Hermitage, High rocky Himalayan ridges veiled in dawn mist and golden sunbeams, lighting: Golden dawn shafts piercing mountain mist",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Slow horizontal pan right with subtle atmospheric depth",
+          "motionSpec": {
+            "rawInstruction": "Slow horizontal pan right with subtle atmospheric depth",
+            "camera": "pan_right",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-1_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "On the jagged peaks of ancient Mandara, Rambha's son Mahishasura stood in relentless penance.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-2.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-1-shot-3",
+          "sceneId": "scene-1",
+          "shotNumber": 3,
+          "startTime": 17.92,
+          "endTime": 26.88,
+          "duration": 8.96,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-mandara-mountain-peaks",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/mandara_peaks.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-1-shot-3.png",
+          "positivePrompt": "epic painterly mythological illustration, The Boons of Penance, location: Mountain Hermitage. Season after season, rain and scorching sun tested his resolve until the sky itself trembled. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Mountain Hermitage, High rocky Himalayan ridges veiled in dawn mist and golden sunbeams, lighting: Golden dawn shafts piercing mountain mist",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Slow zoom-out revealing wide environment",
+          "motionSpec": {
+            "rawInstruction": "Slow zoom-out revealing wide environment",
+            "camera": "zoom_out",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Season after season, rain and scorching sun tested his resolve until the sky itself trembled.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-1_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Season after season, rain and scorching sun tested his resolve until the sky itself trembled.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-3.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-1-shot-4",
+          "sceneId": "scene-1",
+          "shotNumber": 4,
+          "startTime": 26.88,
+          "endTime": 35.83,
+          "duration": 8.95,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-mandara-mountain-peaks",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/mandara_peaks.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-1-shot-4.png",
+          "positivePrompt": "epic painterly mythological illustration, The Boons of Penance, location: Mountain Hermitage. Grant me a boon that no mortal or celestial warrior may end my life. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Mountain Hermitage, High rocky Himalayan ridges veiled in dawn mist and golden sunbeams, lighting: Golden dawn shafts piercing mountain mist",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Layered parallax drift with soft light rays",
+          "motionSpec": {
+            "rawInstruction": "Layered parallax drift with soft light rays",
+            "camera": "parallax",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.55,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Grant me a boon that no mortal or celestial warrior may end my life.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-1_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Grant me a boon that no mortal or celestial warrior may end my life.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-1-shot-4.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        }
+      ]
+    },
+    {
+      "id": "scene-2",
+      "sceneNumber": 2,
+      "title": "Ascent to Power",
+      "summary": "Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion. Ancient banners rose above obsidian battlements as the balance of the three realms began",
+      "environmentId": "env-obsidian-fortress",
+      "narrationText": "Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion. Ancient banners rose above obsidian battlements as the balance of the three realms began to fracture.",
+      "dialogueLines": [],
+      "startTime": 35.83,
+      "endTime": 61.66,
+      "duration": 25.83,
+      "sfxPaths": [],
+      "outputFile": "/app/applet/projects/mahishasura-ep1/scenes/scene-2.mp4",
+      "status": "completed",
+      "shots": [
+        {
+          "id": "scene-2-shot-1",
+          "sceneId": "scene-2",
+          "shotNumber": 1,
+          "startTime": 35.83,
+          "endTime": 44.44,
+          "duration": 8.61,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-obsidian-fortress",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/obsidian_fortress.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-2-shot-1.png",
+          "positivePrompt": "epic painterly mythological illustration, Ascent to Power, location: Obsidian Fortress. Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Obsidian Fortress, Monolithic basalt pillars lit by blazing braziers and crimson banners, lighting: Warm torchlight against deep obsidian stone",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Slow pan right across towering fortress pillars with fire embers",
+          "motionSpec": {
+            "rawInstruction": "Slow pan right across towering fortress pillars with fire embers",
+            "camera": "pan_right",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [
+              "fire"
+            ],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-2_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-2-shot-1.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-2-shot-2",
+          "sceneId": "scene-2",
+          "shotNumber": 2,
+          "startTime": 44.44,
+          "endTime": 53.05,
+          "duration": 8.61,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-obsidian-fortress",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/obsidian_fortress.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-2-shot-2.png",
+          "positivePrompt": "epic painterly mythological illustration, Ascent to Power, location: Obsidian Fortress. Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Obsidian Fortress, Monolithic basalt pillars lit by blazing braziers and crimson banners, lighting: Warm torchlight against deep obsidian stone",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Slow horizontal pan right with subtle atmospheric depth",
+          "motionSpec": {
+            "rawInstruction": "Slow horizontal pan right with subtle atmospheric depth",
+            "camera": "pan_right",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-2_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Armed with the boon that no man could defeat him, Mahishasura forged an unstoppable legion.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-2-shot-2.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-2-shot-3",
+          "sceneId": "scene-2",
+          "shotNumber": 3,
+          "startTime": 53.05,
+          "endTime": 61.66,
+          "duration": 8.61,
+          "charactersPresent": [
+            "char-mahishasura"
+          ],
+          "environmentId": "env-obsidian-fortress",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/obsidian_fortress.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-2-shot-3.png",
+          "positivePrompt": "epic painterly mythological illustration, Ascent to Power, location: Obsidian Fortress. Ancient banners rose above obsidian battlements as the balance of the three realms began to fracture. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Environment: Obsidian Fortress, Monolithic basalt pillars lit by blazing braziers and crimson banners, lighting: Warm torchlight against deep obsidian stone",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, cartoon, blurry, watermark, extra limbs",
+          "motionPrompt": "Slow zoom-out revealing wide environment",
+          "motionSpec": {
+            "rawInstruction": "Slow zoom-out revealing wide environment",
+            "camera": "zoom_out",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Ancient banners rose above obsidian battlements as the balance of the three realms began to fracture.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-2_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Ancient banners rose above obsidian battlements as the balance of the three realms began to fracture.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-2-shot-3.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        }
+      ]
+    },
+    {
+      "id": "scene-3",
+      "sceneNumber": 3,
+      "title": "Gathering Storm",
+      "summary": "Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight. Their combined radiance converged into a single, unwavering resolve. Fr",
+      "environmentId": "env-celestial-citadel",
+      "narrationText": "Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight. Their combined radiance converged into a single, unwavering resolve. From sacred flame and celestial grace emerged Devi, bearing the trident, discus, and lotus of cosmic order.",
+      "dialogueLines": [],
+      "startTime": 61.66,
+      "endTime": 95.83,
+      "duration": 34.17,
+      "sfxPaths": [],
+      "outputFile": "/app/applet/projects/mahishasura-ep1/scenes/scene-3.mp4",
+      "status": "completed",
+      "shots": [
+        {
+          "id": "scene-3-shot-1",
+          "sceneId": "scene-3",
+          "shotNumber": 1,
+          "startTime": 61.66,
+          "endTime": 70.2,
+          "duration": 8.54,
+          "charactersPresent": [
+            "char-devi"
+          ],
+          "environmentId": "env-celestial-citadel",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/celestial_citadel.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-3-shot-1.png",
+          "positivePrompt": "epic painterly mythological illustration, Gathering Storm, location: Celestial Citadel. Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight. | Consistency: Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Celestial Citadel, Elevated cloud-ringed sanctuary crackling with gathering storm lightning, lighting: Cool indigo cloud light with electric cyan flashes",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, blurry, watermark, low contrast, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Slow push-in with storm clouds and lightning flash",
+          "motionSpec": {
+            "rawInstruction": "Slow push-in with storm clouds and lightning flash",
+            "camera": "zoom_in",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "storm",
+            "effects": [
+              "lightning"
+            ],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-3_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-3-shot-1.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 4096
+        },
+        {
+          "id": "scene-3-shot-2",
+          "sceneId": "scene-3",
+          "shotNumber": 2,
+          "startTime": 70.2,
+          "endTime": 78.74,
+          "duration": 8.54,
+          "charactersPresent": [
+            "char-devi"
+          ],
+          "environmentId": "env-celestial-citadel",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/celestial_citadel.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-3-shot-2.png",
+          "positivePrompt": "epic painterly mythological illustration, Gathering Storm, location: Celestial Citadel. Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight. | Consistency: Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Celestial Citadel, Elevated cloud-ringed sanctuary crackling with gathering storm lightning, lighting: Cool indigo cloud light with electric cyan flashes",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, blurry, watermark, low contrast, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Slow horizontal pan right with subtle atmospheric depth",
+          "motionSpec": {
+            "rawInstruction": "Slow horizontal pan right with subtle atmospheric depth",
+            "camera": "pan_right",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-3_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Driven from their sanctuaries, the guardians of the cosmos convened amid thunderclouds and fading starlight.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-3-shot-2.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 4096
+        },
+        {
+          "id": "scene-3-shot-3",
+          "sceneId": "scene-3",
+          "shotNumber": 3,
+          "startTime": 78.74,
+          "endTime": 87.28,
+          "duration": 8.54,
+          "charactersPresent": [
+            "char-devi"
+          ],
+          "environmentId": "env-celestial-citadel",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/celestial_citadel.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-3-shot-3.png",
+          "positivePrompt": "epic painterly mythological illustration, Gathering Storm, location: Celestial Citadel. Their combined radiance converged into a single, unwavering resolve. | Consistency: Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Celestial Citadel, Elevated cloud-ringed sanctuary crackling with gathering storm lightning, lighting: Cool indigo cloud light with electric cyan flashes",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, blurry, watermark, low contrast, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Slow zoom-out revealing wide environment",
+          "motionSpec": {
+            "rawInstruction": "Slow zoom-out revealing wide environment",
+            "camera": "zoom_out",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Their combined radiance converged into a single, unwavering resolve.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-3_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Their combined radiance converged into a single, unwavering resolve.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-3-shot-3.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 4096
+        },
+        {
+          "id": "scene-3-shot-4",
+          "sceneId": "scene-3",
+          "shotNumber": 4,
+          "startTime": 87.28,
+          "endTime": 95.83,
+          "duration": 8.55,
+          "charactersPresent": [
+            "char-devi"
+          ],
+          "environmentId": "env-celestial-citadel",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/celestial_citadel.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-3-shot-4.png",
+          "positivePrompt": "epic painterly mythological illustration, Gathering Storm, location: Celestial Citadel. From sacred flame and celestial grace emerged Devi, bearing the trident, discus, and lotus of cosmic order. | Consistency: Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Celestial Citadel, Elevated cloud-ringed sanctuary crackling with gathering storm lightning, lighting: Cool indigo cloud light with electric cyan flashes",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, blurry, watermark, low contrast, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Layered parallax drift with soft light rays",
+          "motionSpec": {
+            "rawInstruction": "Layered parallax drift with soft light rays",
+            "camera": "parallax",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.55,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "From sacred flame and celestial grace emerged Devi, bearing the trident, discus, and lotus of cosmic order.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-3_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "From sacred flame and celestial grace emerged Devi, bearing the trident, discus, and lotus of cosmic order.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-3-shot-4.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 4096
+        }
+      ]
+    },
+    {
+      "id": "scene-4",
+      "sceneNumber": 4,
+      "title": "The Dawn Confrontation",
+      "summary": "Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains. This first chapter sets the stage for the timeless clash between unbridled power and fearless truth.",
+      "environmentId": "env-crimson-battlefield",
+      "narrationText": "Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains. This first chapter sets the stage for the timeless clash between unbridled power and fearless truth.",
+      "dialogueLines": [],
+      "startTime": 95.83,
+      "endTime": 120,
+      "duration": 24.17,
+      "sfxPaths": [],
+      "outputFile": "/app/applet/projects/mahishasura-ep1/scenes/scene-4.mp4",
+      "status": "completed",
+      "shots": [
+        {
+          "id": "scene-4-shot-1",
+          "sceneId": "scene-4",
+          "shotNumber": 1,
+          "startTime": 95.83,
+          "endTime": 103.89,
+          "duration": 8.06,
+          "charactersPresent": [
+            "char-mahishasura",
+            "char-devi"
+          ],
+          "environmentId": "env-crimson-battlefield",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/crimson_battlefield.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-4-shot-1.png",
+          "positivePrompt": "epic painterly mythological illustration, The Dawn Confrontation, location: Crimson Battlefield. Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Crimson Battlefield, Expansive dusty plain under a dramatic crimson twilight horizon, lighting: Deep crimson sunset backlight with drifting embers",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, blurry, watermark, low contrast, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Layered parallax drift with dramatic fire glow and slow zoom-out",
+          "motionSpec": {
+            "rawInstruction": "Layered parallax drift with dramatic fire glow and slow zoom-out",
+            "camera": "zoom_out",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [
+              "fire",
+              "glow"
+            ],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-4_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-4-shot-1.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-4-shot-2",
+          "sceneId": "scene-4",
+          "shotNumber": 2,
+          "startTime": 103.89,
+          "endTime": 111.95,
+          "duration": 8.06,
+          "charactersPresent": [
+            "char-mahishasura",
+            "char-devi"
+          ],
+          "environmentId": "env-crimson-battlefield",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/crimson_battlefield.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-4-shot-2.png",
+          "positivePrompt": "epic painterly mythological illustration, The Dawn Confrontation, location: Crimson Battlefield. Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Crimson Battlefield, Expansive dusty plain under a dramatic crimson twilight horizon, lighting: Deep crimson sunset backlight with drifting embers",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, blurry, watermark, low contrast, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Slow horizontal pan right with subtle atmospheric depth",
+          "motionSpec": {
+            "rawInstruction": "Slow horizontal pan right with subtle atmospheric depth",
+            "camera": "pan_right",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic-v1",
+          "generationMethod": "deterministic",
+          "narrationSegment": "Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-4_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "Beneath a crimson twilight sky, pride met cosmic dharma upon the open plains.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-4-shot-2.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        },
+        {
+          "id": "scene-4-shot-3",
+          "sceneId": "scene-4",
+          "shotNumber": 3,
+          "startTime": 111.95,
+          "endTime": 120,
+          "duration": 8.05,
+          "charactersPresent": [
+            "char-mahishasura",
+            "char-devi"
+          ],
+          "environmentId": "env-crimson-battlefield",
+          "referenceImages": [
+            "/app/applet/projects/mahishasura-ep1/characters/mahishasura_ref.png",
+            "/app/applet/projects/mahishasura-ep1/characters/devi_ref.png",
+            "/app/applet/projects/mahishasura-ep1/environments/crimson_battlefield.png"
+          ],
+          "imageAssetPath": "/app/applet/projects/mahishasura-ep1/storyboard/scene-4-shot-3.png",
+          "positivePrompt": "epic painterly mythological illustration, The Dawn Confrontation, location: Crimson Battlefield. This first chapter sets the stage for the timeless clash between unbridled power and fearless truth. | Consistency: Mahishasura, Broad-shouldered armored silhouette, curved obsidian horns, intense amber gaze, face: Strong angular jaw, furrowed brow, bronze skin tone, wearing Dark bronze breastplate, crimson battle waist-sash, iron pauldrons, with Curved steel mace, royal horned crown, palette: #450a0a, #ea580c, #1c1917; Devi, Serene fearless expression, luminous golden aura, flowing dark hair, face: Calm determined eyes, golden bindu on forehead, wearing Crimson and gold silk battle saree, ornate celestial armor, with Golden trident, blazing discus, lotus emblem, palette: #7c2d12, #f59e0b, #fef3c7; Environment: Crimson Battlefield, Expansive dusty plain under a dramatic crimson twilight horizon, lighting: Deep crimson sunset backlight with drifting embers",
+          "negativePrompt": "low quality, blurry, distorted anatomy, text overlay, watermark, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, blurry, watermark, low contrast, modern clothing, cartoon, blurry, watermark, extra limbs, modern clothing, blurry, watermark, low contrast",
+          "motionPrompt": "Slow zoom-out revealing wide environment",
+          "motionSpec": {
+            "rawInstruction": "Slow zoom-out revealing wide environment",
+            "camera": "zoom_out",
+            "cameraSpeed": "slow",
+            "subjectMotion": "minimal",
+            "cameraShake": false,
+            "parallaxDepth": 0.25,
+            "weather": "none",
+            "effects": [],
+            "transitionIn": "fade",
+            "transitionOut": "dissolve",
+            "motionBlur": false,
+            "preserveCharacterIdentity": true
+          },
+          "animationModel": "ffmpeg-deterministic",
+          "generationMethod": "deterministic",
+          "narrationSegment": "This first chapter sets the stage for the timeless clash between unbridled power and fearless truth.",
+          "narrationAudioPath": "/app/applet/projects/mahishasura-ep1/audio/scene-4_narration.wav",
+          "soundEffects": [],
+          "subtitleSegment": "This first chapter sets the stage for the timeless clash between unbridled power and fearless truth.",
+          "outputFile": "/app/applet/projects/mahishasura-ep1/shots/scene-4-shot-3.mp4",
+          "status": "completed",
+          "approved": false,
+          "seed": 2048
+        }
+      ]
+    }
+  ],
+  "subtitles": [
+    {
+      "index": 1,
+      "startTime": 0,
+      "endTime": 4.44,
+      "text": "On the jagged peaks of ancient Mandara,\nRambha's son Mahishasura stood in relentless",
+      "language": "en"
+    },
+    {
+      "index": 2,
+      "startTime": 4.48,
+      "endTime": 8.92,
+      "text": "penance.",
+      "language": "en"
+    },
+    {
+      "index": 3,
+      "startTime": 8.96,
+      "endTime": 13.4,
+      "text": "On the jagged peaks of ancient Mandara,\nRambha's son Mahishasura stood in relentless",
+      "language": "en"
+    },
+    {
+      "index": 4,
+      "startTime": 13.44,
+      "endTime": 17.88,
+      "text": "penance.",
+      "language": "en"
+    },
+    {
+      "index": 5,
+      "startTime": 17.92,
+      "endTime": 22.36,
+      "text": "Season after season, rain and scorching sun\ntested his resolve until the sky itself",
+      "language": "en"
+    },
+    {
+      "index": 6,
+      "startTime": 22.4,
+      "endTime": 26.84,
+      "text": "trembled.",
+      "language": "en"
+    },
+    {
+      "index": 7,
+      "startTime": 26.88,
+      "endTime": 35.79,
+      "text": "Grant me a boon that no mortal or celestial\nwarrior may end my life.",
+      "language": "en"
+    },
+    {
+      "index": 8,
+      "startTime": 35.83,
+      "endTime": 40.095,
+      "text": "Armed with the boon that no man could defeat\nhim, Mahishasura forged an unstoppable",
+      "language": "en"
+    },
+    {
+      "index": 9,
+      "startTime": 40.135,
+      "endTime": 44.4,
+      "text": "legion.",
+      "language": "en"
+    },
+    {
+      "index": 10,
+      "startTime": 44.44,
+      "endTime": 48.705,
+      "text": "Armed with the boon that no man could defeat\nhim, Mahishasura forged an unstoppable",
+      "language": "en"
+    },
+    {
+      "index": 11,
+      "startTime": 48.745,
+      "endTime": 53.01,
+      "text": "legion.",
+      "language": "en"
+    },
+    {
+      "index": 12,
+      "startTime": 53.05,
+      "endTime": 57.315,
+      "text": "Ancient banners rose above obsidian\nbattlements as the balance of the three",
+      "language": "en"
+    },
+    {
+      "index": 13,
+      "startTime": 57.355,
+      "endTime": 61.62,
+      "text": "to fracture.",
+      "language": "en"
+    },
+    {
+      "index": 14,
+      "startTime": 61.66,
+      "endTime": 65.89,
+      "text": "Driven from their sanctuaries, the guardians\nof the cosmos convened amid thunderclouds",
+      "language": "en"
+    },
+    {
+      "index": 15,
+      "startTime": 65.93,
+      "endTime": 70.16,
+      "text": "and fading starlight.",
+      "language": "en"
+    },
+    {
+      "index": 16,
+      "startTime": 70.2,
+      "endTime": 74.43,
+      "text": "Driven from their sanctuaries, the guardians\nof the cosmos convened amid thunderclouds",
+      "language": "en"
+    },
+    {
+      "index": 17,
+      "startTime": 74.47,
+      "endTime": 78.7,
+      "text": "and fading starlight.",
+      "language": "en"
+    },
+    {
+      "index": 18,
+      "startTime": 78.74,
+      "endTime": 87.24,
+      "text": "Their combined radiance converged into a\nsingle, unwavering resolve.",
+      "language": "en"
+    },
+    {
+      "index": 19,
+      "startTime": 87.28,
+      "endTime": 91.515,
+      "text": "From sacred flame and celestial grace\nemerged Devi, bearing the trident, discus,",
+      "language": "en"
+    },
+    {
+      "index": 20,
+      "startTime": 91.555,
+      "endTime": 95.79,
+      "text": "lotus of cosmic order.",
+      "language": "en"
+    },
+    {
+      "index": 21,
+      "startTime": 95.83,
+      "endTime": 103.85,
+      "text": "Beneath a crimson twilight sky, pride met\ncosmic dharma upon the open plains.",
+      "language": "en"
+    },
+    {
+      "index": 22,
+      "startTime": 103.89,
+      "endTime": 111.91,
+      "text": "Beneath a crimson twilight sky, pride met\ncosmic dharma upon the open plains.",
+      "language": "en"
+    },
+    {
+      "index": 23,
+      "startTime": 111.95,
+      "endTime": 115.935,
+      "text": "This first chapter sets the stage for the\ntimeless clash between unbridled power and",
+      "language": "en"
+    },
+    {
+      "index": 24,
+      "startTime": 115.975,
+      "endTime": 119.96,
+      "text": "fearless truth.",
+      "language": "en"
+    }
+  ],
+  "voiceConfig": {
+    "language": "en",
+    "voiceIdentity": "piper-default",
+    "consentVerified": false,
+    "consentStatement": "",
+    "deliveryStyle": "epic documentary narration",
+    "speakingSpeed": 1,
+    "emotionalTone": "dramatic",
+    "pronunciationDict": {
+      "Mahishasura": "Ma-hi-sha-su-ra",
+      "Devi": "Day-vee",
+      "Mandara": "Man-da-ra"
+    },
+    "generatedNarrationPath": "/app/applet/projects/mahishasura-ep1/audio/narration_master.wav"
+  },
+  "audioConfig": {
+    "musicVolume": 0.22,
+    "narrationVolume": 1,
+    "ambientVolume": 0.18,
+    "sfxVolume": 0.45,
+    "duckingEnabled": true,
+    "fadeInSeconds": 1.5,
+    "fadeOutSeconds": 2,
+    "mixedAudioPath": "/app/applet/projects/mahishasura-ep1/audio/master_mix.wav"
+  },
+  "generationSettings": {
+    "imageProvider": "procedural",
+    "animationProvider": "deterministic",
+    "lowVramMode": true,
+    "maxVramMb": 4096,
+    "visualStyle": "epic painterly mythological illustration",
+    "defaultSeed": 2048
+  },
+  "outputSettings": {
+    "resolution": "720p",
+    "aspectRatio": "16:9",
+    "fps": 24,
+    "exportVerticalAlso": true,
+    "exportSquareAlso": false,
+    "burnSubtitles": false,
+    "subtitleLanguage": "en",
+    "subtitleStyle": {
+      "font": "Arial",
+      "size": 24,
+      "color": "#FFFFFF",
+      "position": "bottom",
+      "backgroundOpacity": 0.55,
+      "outlineWidth": 2,
+      "maxCharsPerLine": 44
+    }
+  },
+  "exports": {
+    "landscapeMp4": "/app/applet/projects/mahishasura-ep1/exports/mahishasura-ep1_final_16x9.mp4",
+    "verticalMp4": "/app/applet/projects/mahishasura-ep1/exports/mahishasura-ep1_final_9x16.mp4",
+    "srtPath": "/app/applet/projects/mahishasura-ep1/subtitles/subtitles.srt",
+    "vttPath": "/app/applet/projects/mahishasura-ep1/subtitles/subtitles.vtt",
+    "assPath": "/app/applet/projects/mahishasura-ep1/subtitles/subtitles.ass",
+    "archiveZip": "/app/applet/projects/mahishasura-ep1/exports/mahishasura-ep1_archive.zip"
+  },
+  "errors": []
+}

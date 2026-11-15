@@ -5,6 +5,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { CACHE_DIR, PROJECTS_DIR } from '../db/database.ts';
 import { getCacheStats } from '../engines/assetCache.ts';
+import { resolvePiperBinary, resolvePiperModel } from '../engines/voiceEngine.ts';
 
 const execFileAsync = promisify(execFile);
 
@@ -44,7 +45,8 @@ export async function getSystemStatus(): Promise<SystemStatusReport> {
 
   const cacheStats = getCacheStats();
   const projectsBytes = folderBytes(PROJECTS_DIR);
-  const piperBin = process.env.PIPER_BINARY_PATH || '';
+  const piperBin = resolvePiperBinary();
+  const piperModel = resolvePiperModel('en');
 
   return {
     platform: `${os.platform()} (${os.arch()})`,
@@ -66,7 +68,7 @@ export async function getSystemStatus(): Promise<SystemStatusReport> {
       imagemagickAvailable,
       comfyUiReachable,
       ollamaReachable,
-      piperConfigured: Boolean(piperBin && fs.existsSync(piperBin)),
+      piperConfigured: Boolean(piperBin && piperModel),
     },
   };
 }

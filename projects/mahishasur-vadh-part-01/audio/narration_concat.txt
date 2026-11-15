@@ -1,0 +1,3 @@
+file '/app/applet/projects/mahishasur-vadh-part-01/audio/scene-1_narration.wav'
+file '/app/applet/projects/mahishasur-vadh-part-01/audio/scene-2_narration.wav'
+file '/app/applet/projects/mahishasur-vadh-part-01/audio/scene-3_narration.wav'

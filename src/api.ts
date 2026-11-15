@@ -17,6 +17,16 @@ export function mediaUrl(filePath?: string): string {
 export const api = {
   getSystemStatus: () => apiFetch<SystemStatusReport>('/api/system/status'),
   clearCache: () => apiFetch<{ removedFiles: number }>('/api/system/clear-cache', { method: 'POST' }),
+  listTestPackages: () =>
+    apiFetch<{
+      packages: Array<{
+        id: string;
+        name: string;
+        zipPath: string;
+        sizeBytes: number;
+        report: Record<string, unknown> | null;
+      }>;
+    }>('/api/test-packages'),
 
   listProjects: () => apiFetch<{ projects: ProjectManifest[] }>('/api/projects'),
   getProject: (id: string) =>

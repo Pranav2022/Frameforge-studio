@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  Archive,
   CheckCircle2,
+  Download,
   FolderOpen,
   HardDrive,
   Plus,
@@ -9,6 +11,7 @@ import {
   AlertTriangle,
   Cpu,
 } from 'lucide-react';
+import { api, mediaUrl } from '../api';
 import { ProjectManifest, SystemStatusReport } from '../types';
 
 interface Props {
@@ -41,6 +44,17 @@ export const DashboardView: React.FC<Props> = ({
   onRefreshStatus,
   onClearCache,
 }) => {
+  const [testPackages, setTestPackages] = useState<
+    Array<{ id: string; name: string; zipPath: string; sizeBytes: number }>
+  >([]);
+
+  useEffect(() => {
+    api
+      .listTestPackages()
+      .then((res) => setTestPackages(res.packages || []))
+      .catch(() => setTestPackages([]));
+  }, [projects.length]);
+
   return (
     <div className="space-y-8">
       {/* Header Row */}
@@ -133,6 +147,29 @@ export const DashboardView: React.FC<Props> = ({
           </p>
         </div>
       </section>
+
+      {/* Downloadable Full Test Packages (when built) */}
+      {testPackages.length > 0 && (
+        <section className="rounded-lg border border-amber-200 bg-amber-50/50 px-5 py-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Archive className="h-5 w-5 text-amber-700 shrink-0" />
+            <div>
+              <h2 className="text-sm font-semibold text-slate-900">{testPackages[0].name}</h2>
+              <p className="text-xs text-slate-600">
+                Includes all 8 question-hook scripts, 9:16 images, Piper spoken voice WAV/MP3s, importable ZIPs, and rendered MP4s ({formatBytes(testPackages[0].sizeBytes)}).
+              </p>
+            </div>
+          </div>
+          <a
+            href={mediaUrl(testPackages[0].zipPath)}
+            download
+            className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-2 text-xs font-medium text-white hover:bg-slate-800 whitespace-nowrap shrink-0"
+          >
+            <Download className="h-3.5 w-3.5" />
+            Download Full Test Package (.zip)
+          </a>
+        </section>
+      )}
 
       {/* Projects Table */}
       <section className="rounded-lg border border-slate-200 bg-white">
@@ -295,7 +332,11 @@ export const DashboardView: React.FC<Props> = ({
                 <td className="px-4 py-3">
                   <StatusText ok={Boolean(systemStatus?.tools.piperConfigured)} okLabel="Configured" failLabel="Cadence / User Audio" />
                 </td>
-                <td className="px-5 py-3 text-slate-500">Upload recorded voiceover or configure PIPER_BINARY_PATH</td>
+                <td className="px-5 py-3 text-slate-500">
+                  {systemStatus?.tools.piperConfigured
+                    ? 'Active: local neural voice model in models/speech/'
+                    : 'Upload recorded voiceover or configure PIPER_BINARY_PATH'}
+                </td>
               </tr>
             </tbody>
           </table>

@@ -68,6 +68,35 @@ async function startServer() {
     res.json(clearUnusedCache());
   });
 
+  app.get('/api/test-packages', (_req, res) => {
+    const pkgDir = path.join(PROJECTS_DIR, 'mahishasur-vadh-test-package');
+    const zipPath = path.join(pkgDir, 'mahishasur_vadh_full_test_package.zip');
+    const reportPath = path.join(pkgDir, 'test_report.json');
+    if (!fs.existsSync(zipPath)) {
+      return res.json({ packages: [] });
+    }
+    const stat = fs.statSync(zipPath);
+    let report: Record<string, unknown> | null = null;
+    try {
+      if (fs.existsSync(reportPath)) {
+        report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+      }
+    } catch {
+      report = null;
+    }
+    res.json({
+      packages: [
+        {
+          id: 'mahishasur-vadh-test-package',
+          name: 'Mahishasur Vadh — 8-Part Full Test Package',
+          zipPath,
+          sizeBytes: stat.size,
+          report,
+        },
+      ],
+    });
+  });
+
   app.post('/api/ai-assist/draft', async (req, res) => {
     const { topic, targetDurationSeconds = 120, language = 'en', visualStyle = 'cinematic illustration' } =
       req.body || {};
@@ -182,6 +211,82 @@ async function startServer() {
     }
   });
 
+  function resolveImportedAssetPath(rawPath: string | undefined, targetDir: string): string | undefined {
+    if (!rawPath) return rawPath;
+    if (fs.existsSync(rawPath)) return rawPath;
+    const normalized = rawPath.replace(/\\/g, '/');
+    const direct = path.resolve(targetDir, normalized.replace(/^\/+/, ''));
+    if (fs.existsSync(direct)) return direct;
+
+    for (const sub of ['storyboard', 'characters', 'environments', 'audio', 'shots', 'scenes', 'subtitles', 'exports', 'inputs']) {
+      const idx = normalized.lastIndexOf(`/${sub}/`);
+      if (idx >= 0) {
+        const rel = normalized.slice(idx + 1);
+        const candidate = path.join(targetDir, rel);
+        if (fs.existsSync(candidate)) return candidate;
+      }
+      const byBase = path.join(targetDir, sub, path.basename(normalized));
+      if (fs.existsSync(byBase)) return byBase;
+    }
+    return rawPath;
+  }
+
+  function remapImportedManifestPaths(manifest: ProjectManifest, targetDir: string): ProjectManifest {
+    return {
+      ...manifest,
+      characters: manifest.characters.map((ch) => ({
+        ...ch,
+        referenceImages: ch.referenceImages
+          .map((p) => resolveImportedAssetPath(p, targetDir) || p)
+          .filter((p) => fs.existsSync(p)),
+      })),
+      environments: manifest.environments.map((env) => ({
+        ...env,
+        backgroundImage: resolveImportedAssetPath(env.backgroundImage, targetDir),
+        foregroundLayer: resolveImportedAssetPath(env.foregroundLayer, targetDir),
+        ambientAudio: resolveImportedAssetPath(env.ambientAudio, targetDir),
+      })),
+      voiceConfig: {
+        ...manifest.voiceConfig,
+        voiceSamplePath: resolveImportedAssetPath(manifest.voiceConfig.voiceSamplePath, targetDir),
+        generatedNarrationPath: resolveImportedAssetPath(manifest.voiceConfig.generatedNarrationPath, targetDir),
+      },
+      audioConfig: {
+        ...manifest.audioConfig,
+        backgroundMusicPath: resolveImportedAssetPath(manifest.audioConfig.backgroundMusicPath, targetDir),
+        mixedAudioPath: resolveImportedAssetPath(manifest.audioConfig.mixedAudioPath, targetDir),
+      },
+      brandingConfig: {
+        ...manifest.brandingConfig,
+        watermarkImagePath: resolveImportedAssetPath(manifest.brandingConfig.watermarkImagePath, targetDir),
+      },
+      exports: {
+        landscapeMp4: resolveImportedAssetPath(manifest.exports.landscapeMp4, targetDir),
+        verticalMp4: resolveImportedAssetPath(manifest.exports.verticalMp4, targetDir),
+        squareMp4: resolveImportedAssetPath(manifest.exports.squareMp4, targetDir),
+        srtPath: resolveImportedAssetPath(manifest.exports.srtPath, targetDir),
+        vttPath: resolveImportedAssetPath(manifest.exports.vttPath, targetDir),
+        assPath: resolveImportedAssetPath(manifest.exports.assPath, targetDir),
+        archiveZip: resolveImportedAssetPath(manifest.exports.archiveZip, targetDir),
+      },
+      scenes: manifest.scenes.map((sc) => ({
+        ...sc,
+        ambientAudioPath: resolveImportedAssetPath(sc.ambientAudioPath, targetDir),
+        outputFile: resolveImportedAssetPath(sc.outputFile, targetDir),
+        shots: sc.shots.map((sh) => ({
+          ...sh,
+          referenceImages: sh.referenceImages
+            .map((p) => resolveImportedAssetPath(p, targetDir) || p)
+            .filter((p) => fs.existsSync(p)),
+          imageAssetPath: resolveImportedAssetPath(sh.imageAssetPath, targetDir),
+          importedClipPath: resolveImportedAssetPath(sh.importedClipPath, targetDir),
+          narrationAudioPath: resolveImportedAssetPath(sh.narrationAudioPath, targetDir),
+          outputFile: resolveImportedAssetPath(sh.outputFile, targetDir),
+        })),
+      })),
+    };
+  }
+
   app.post('/api/projects/import-package', upload.single('packageFile'), (req, res) => {
     try {
       if (!req.file) return res.status(400).json({ error: 'No manifest JSON or ZIP package uploaded.' });
@@ -213,7 +318,8 @@ async function startServer() {
             projectId,
             updatedAt: new Date().toISOString(),
           });
-          return res.status(201).json({ project: saveManifest(parsed) });
+          const remapped = remapImportedManifestPaths(parsed, targetDir);
+          return res.status(201).json({ project: saveManifest(remapped) });
         }
 
         // Fallback: look for any .txt script inside ZIP

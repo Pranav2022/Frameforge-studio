@@ -7,7 +7,19 @@ import { ProjectManifest } from '../types/manifest.ts';
 
 const execFileAsync = promisify(execFile);
 
-function resolvePiperModel(language: string): string | null {
+export function resolvePiperBinary(): string | null {
+  const candidates = [
+    process.env.PIPER_BINARY_PATH,
+    path.join(WORKSPACE_ROOT, 'models', 'piper', process.platform === 'win32' ? 'piper.exe' : 'piper'),
+  ].filter((p): p is string => Boolean(p && p.trim()));
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+export function resolvePiperModel(language: string): string | null {
   if (process.env.PIPER_MODEL_PATH && fs.existsSync(process.env.PIPER_MODEL_PATH)) {
     return process.env.PIPER_MODEL_PATH;
   }
@@ -22,9 +34,16 @@ function resolvePiperModel(language: string): string | null {
   return path.join(speechDir, matched);
 }
 
-async function runPiperToWav(piperBin: string, modelPath: string | null, text: string, outWav: string): Promise<void> {
+export async function runPiperToWav(
+  piperBin: string,
+  modelPath: string | null,
+  text: string,
+  outWav: string,
+  speakingSpeed = 1.0
+): Promise<void> {
   await new Promise<void>((resolve, reject) => {
-    const args = ['--output_file', outWav];
+    const lengthScale = (1 / Math.max(0.6, Math.min(1.5, speakingSpeed || 1.0))).toFixed(3);
+    const args = ['--output_file', outWav, '--length_scale', lengthScale];
     if (modelPath) args.unshift('--model', modelPath);
     const proc = spawn(piperBin, args, { stdio: ['pipe', 'ignore', 'pipe'] });
     let errBuf = '';
@@ -47,6 +66,23 @@ async function runPiperToWav(piperBin: string, modelPath: string | null, text: s
     proc.stdin?.write(text);
     proc.stdin?.end();
   });
+}
+
+export async function measureAudioDuration(filePath: string): Promise<number> {
+  try {
+    const { stdout } = await execFileAsync('ffprobe', [
+      '-v',
+      'error',
+      '-show_entries',
+      'format=duration',
+      '-of',
+      'csv=p=0',
+      filePath,
+    ]);
+    return Number(stdout.trim() || 0);
+  } catch {
+    return 0;
+  }
 }
 
 export interface VoiceValidationResult {
@@ -126,8 +162,8 @@ export function applyPronunciationDictionary(
 
 /**
  * Generates scene-synchronized narration WAV & MP3.
- * Uses Piper TTS when configured on the machine (matching language model in models/speech/),
- * or user-uploaded/recorded narration if present,
+ * Uses Piper TTS when available (auto-detecting models/piper/piper & models/speech/*.onnx),
+ * or preserves user-uploaded/pre-packaged narration if present,
  * or synthesizes a clean spoken-cadence tone/pause bed when running in zero-model mode so
  * audio mixing, ducking, and video assembly always produce valid, duration-matched media.
  */
@@ -157,9 +193,15 @@ export async function generateProjectNarration(
     );
   }
 
-  const piperBin = process.env.PIPER_BINARY_PATH || '';
+  const piperBin = resolvePiperBinary();
   const piperModel = resolvePiperModel(manifest.voiceConfig.language);
   const hasPiper = Boolean(piperBin && fs.existsSync(piperBin) && piperModel);
+  const preferImported = manifest.voiceConfig.voiceIdentity === 'imported';
+  const suppliedMaster =
+    manifest.voiceConfig.generatedNarrationPath &&
+    fs.existsSync(manifest.voiceConfig.generatedNarrationPath)
+      ? manifest.voiceConfig.generatedNarrationPath
+      : null;
 
   const segmentFiles: string[] = [];
   let engineUsed = 'deterministic-cadence-guide';
@@ -173,25 +215,44 @@ export async function generateProjectNarration(
     );
     const sceneWav = path.join(audioDir, `${scene.id}_narration.wav`);
     const rawPiperWav = path.join(audioDir, `${scene.id}_piper_raw.wav`);
+    const existingShotAudio = scene.shots.find(
+      (s) => s.narrationAudioPath && fs.existsSync(s.narrationAudioPath) && fs.statSync(s.narrationAudioPath).size > 4096
+    )?.narrationAudioPath;
 
-    if (hasPiper) {
+    if (preferImported && fs.existsSync(sceneWav) && fs.statSync(sceneWav).size > 4096) {
+      engineUsed = 'imported-scene-narration';
+    } else if (preferImported && existingShotAudio) {
+      engineUsed = 'imported-scene-narration';
+      await normalizeAndPadAudio(existingShotAudio, sceneWav, scene.duration);
+    } else if (preferImported && suppliedMaster) {
+      engineUsed = 'user-supplied-narration';
+      await sliceAndNormalizeAudio(
+        suppliedMaster,
+        sceneWav,
+        scene.startTime,
+        scene.duration
+      );
+    } else if (hasPiper && piperBin) {
       engineUsed = `piper-tts-local (${path.basename(piperModel!)})`;
       try {
-        await runPiperToWav(piperBin, piperModel, cleanText, rawPiperWav);
+        await runPiperToWav(
+          piperBin,
+          piperModel,
+          cleanText,
+          rawPiperWav,
+          manifest.voiceConfig.speakingSpeed || 1.0
+        );
         await normalizeAndPadAudio(rawPiperWav, sceneWav, scene.duration);
         if (fs.existsSync(rawPiperWav)) fs.unlinkSync(rawPiperWav);
       } catch {
         await synthesizeCadenceSegment(sceneWav, scene.duration, scene.sceneNumber, cleanText.length);
       }
-    } else if (
-      manifest.voiceConfig.generatedNarrationPath &&
-      fs.existsSync(manifest.voiceConfig.generatedNarrationPath) &&
-      manifest.scenes.length === 1
-    ) {
+    } else if (suppliedMaster) {
       engineUsed = 'user-supplied-narration';
-      await normalizeAndPadAudio(
-        manifest.voiceConfig.generatedNarrationPath,
+      await sliceAndNormalizeAudio(
+        suppliedMaster,
         sceneWav,
+        scene.startTime,
         scene.duration
       );
     } else {
@@ -262,13 +323,50 @@ export async function generateProjectNarration(
   };
 }
 
+async function sliceAndNormalizeAudio(
+  inputPath: string,
+  outputWav: string,
+  startSec: number,
+  targetDuration: number
+) {
+  await execFileAsync('ffmpeg', [
+    '-y',
+    '-ss',
+    String(Math.max(0, startSec)),
+    '-t',
+    String(targetDuration),
+    '-i',
+    inputPath,
+    '-af',
+    `loudnorm=I=-16:TP=-1.5:LRA=11,apad=whole_dur=${targetDuration}`,
+    '-t',
+    String(targetDuration),
+    '-ar',
+    '44100',
+    '-ac',
+    '2',
+    '-c:a',
+    'pcm_s16le',
+    outputWav,
+  ]);
+}
+
 async function normalizeAndPadAudio(inputPath: string, outputWav: string, targetDuration: number) {
+  const actualDur = await measureAudioDuration(inputPath);
+  const filters: string[] = ['silenceremove=start_periods=1:start_threshold=-48dB'];
+  // If synthesized speech slightly exceeds scene slot, gently accelerate tempo so no word is ever cut off
+  if (actualDur > targetDuration - 0.08 && targetDuration > 0.5) {
+    const neededTempo = Math.min(1.38, Math.max(1.01, (actualDur + 0.12) / targetDuration));
+    filters.push(`atempo=${neededTempo.toFixed(3)}`);
+  }
+  filters.push(`loudnorm=I=-16:TP=-1.5:LRA=11`, `apad=whole_dur=${targetDuration}`);
+
   await execFileAsync('ffmpeg', [
     '-y',
     '-i',
     inputPath,
     '-af',
-    `silenceremove=start_periods=1:start_threshold=-45dB,loudnorm=I=-16:TP=-1.5:LRA=11,apad=whole_dur=${targetDuration}`,
+    filters.join(','),
     '-t',
     String(targetDuration),
     '-ar',

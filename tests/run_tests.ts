@@ -6,6 +6,11 @@ import { applyCharacterAndEnvironmentConsistency } from '../server/engines/chara
 import { parseMotionInstruction } from '../server/engines/motionParser.ts';
 import { processScriptToPlan, validateManifestDurations } from '../server/engines/scriptProcessor.ts';
 import { buildSubtitleEntries, formatASS, formatSRT, formatVTT } from '../server/engines/subtitleEngine.ts';
+import {
+  applyPronunciationDictionary,
+  resolvePiperBinary,
+  resolvePiperModel,
+} from '../server/engines/voiceEngine.ts';
 import { ProjectManifestSchema } from '../server/types/manifest.ts';
 
 function runUnitTests() {
@@ -128,6 +133,16 @@ NARRATOR: Pressure rises steadily as bioluminescent currents drift past the lens
   const hit = getCachedFile(h1, 'txt');
   assert.ok(hit && fs.existsSync(hit));
   fs.unlinkSync(tmpFile);
+
+  // 6. Piper TTS Auto-Detection & Pronunciation Dictionary
+  const piperBin = resolvePiperBinary();
+  const piperModel = resolvePiperModel('en');
+  assert.ok(piperBin && fs.existsSync(piperBin), 'Expected auto-detected Piper binary');
+  assert.ok(piperModel && fs.existsSync(piperModel), 'Expected auto-detected Piper ONNX model');
+  const pronounced = applyPronunciationDictionary('Mahishasura used Trishul', {
+    Trishul: 'Tree-shool',
+  });
+  assert.equal(pronounced, 'Mahishasura used Tree-shool');
 
   console.log('All unit tests passed.');
 }

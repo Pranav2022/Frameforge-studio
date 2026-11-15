@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertTriangle, CheckCircle2, RefreshCw, ShieldAlert, ThumbsUp } from 'lucide-react';
 import { mediaUrl } from '../api';
 import { ProjectManifest, QCReport } from '../types';
@@ -20,6 +20,11 @@ export const PreviewQCView: React.FC<Props> = ({
 }) => {
   const [selectedVideo, setSelectedVideo] = useState<string>(project.exports.landscapeMp4 || '');
   const [selectedTitle, setSelectedTitle] = useState<string>('Full Episode Master');
+
+  useEffect(() => {
+    setSelectedVideo(project.exports.landscapeMp4 || '');
+    setSelectedTitle(`Primary Master (${project.outputSettings.aspectRatio})`);
+  }, [project.projectId, project.exports.landscapeMp4, project.outputSettings.aspectRatio]);
 
   return (
     <div className="space-y-8">
